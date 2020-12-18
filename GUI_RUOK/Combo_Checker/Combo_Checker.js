@@ -1,5 +1,4 @@
 const addMove = document.querySelector("#add_move");
-const checkCombo = document.querySelector("#check_combo");
 const moveList = document.querySelector("#move_holder");
 
 function checkMoveList(){
@@ -27,6 +26,7 @@ function checkMoveList(){
         damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
       }
     }
+    console.log(moveList.childNodes[2].childNodes[1].value);
     if(damagePre >= damagePost && j-2 >= 1){
       moveList.childNodes[j-2].style.backgroundColor = "green";
     }
@@ -67,10 +67,6 @@ addMove.addEventListener("click",() => {
   appendMove();
 })
 
-checkCombo.addEventListener("click",()=>{
-  checkMoveList();
-})
-
-document.querySelector("body").onkeypress = function(){
+document.querySelector("body").onkeyup = function(){
   checkMoveList();
 }
