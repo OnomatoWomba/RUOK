@@ -44,7 +44,7 @@ function appendMove(){
 
   //Add ability to remove with a click of the X button.
   removeButton.append(document.createTextNode("X"));
-  removeButton.setAttribute("onclick", "parentNode.parentNode.removeChild(parentNode)");
+  removeButton.setAttribute("onclick", "parentNode.parentNode.removeChild(parentNode);checkMoveList();");
   removeButton.setAttribute("tabindex", -1);
 
   //Limit to numbers in input.
@@ -64,9 +64,12 @@ function appendMove(){
 
 addMove.addEventListener("click",() => {
   appendMove();
-  //console.log(document.querySelector("#move_holder").children.length);
 })
 
 checkCombo.addEventListener("click",()=>{
   checkMoveList();
 })
+
+document.querySelector("body").onkeypress = function(){
+  checkMoveList();
+}
