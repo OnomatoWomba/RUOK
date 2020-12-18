@@ -13,7 +13,8 @@ function checkMoveList(){
     damagePre = 0;
     damagePost = 0;
 
-    moveList.childNodes[i].style.backgroundColor = null;
+    moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
+    moveList.childNodes[0].style.backgroundColor = "green";
 
     for(j=0;j<=i;j++){
       damagePre += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
