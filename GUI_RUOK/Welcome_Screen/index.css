@@ -1,0 +1,22 @@
+body{
+  background-color:gray;
+  overflow:hidden;
+}
+
+h1{
+  font-family:sans-serif;
+  text-align:center;
+  color:white;
+}
+
+button{
+  display:block;
+  align:center;
+  width:50%;
+  margin: 10vh auto;
+  background-color:green;
+  color:white;
+  border:none;
+  font-family:sans-serif;
+  padding:12vh;
+}

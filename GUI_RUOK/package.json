@@ -1,0 +1,17 @@
+{
+  "name": "GUI_RUOK",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+  },
+  "keywords": [],
+  "author": "OnomatoWombat",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.1.0",
+    "electron-builder": "^22.9.1"
+  }
+}

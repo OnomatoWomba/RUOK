@@ -1,0 +1,51 @@
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:sans-serif;
+  background-color:gray;
+}
+
+#center-buttons > button{
+  width:40vw;
+  margin: 0 auto;
+  background-color:green;
+  color:white;
+  border:none;
+  font-family:sans-serif;
+  padding:0%;
+}
+
+#move_holder > div{
+  margin-top:2.5vh;
+  display:inline-block;
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
+  color:white;
+}
+
+#move_holder > div > button{
+  text-align:center;
+  width:5vw;
+}
+
+input{
+  padding:0;
+  width:30vw;
+  transition-duration: 500ms;
+  margin:0 1vw 0 1vw;
+}
+
+input:invalid{
+  color:red;
+}
+
+#center-buttons{
+  height:5vh;
+  margin-top:2.5vh;
+  display:flex;
+  justify-content:center;
+}
