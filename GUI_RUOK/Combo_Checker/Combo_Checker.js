@@ -26,7 +26,6 @@ function checkMoveList(){
         damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
       }
     }
-    console.log(moveList.childNodes[2].childNodes[1].value);
     if(damagePre >= damagePost && j-2 >= 1){
       moveList.childNodes[j-2].style.backgroundColor = "green";
     }
@@ -42,11 +41,17 @@ function appendMove(){
   var damageInput = document.createElement("input");
   var prorationInput = document.createElement("input");
   var removeButton = document.createElement("button");
+  var moveButton = document.createElement("button");
 
   //Add ability to remove with a click of the X button.
   removeButton.append(document.createTextNode("X"));
   removeButton.setAttribute("onclick", "parentNode.parentNode.removeChild(parentNode);checkMoveList();");
   removeButton.setAttribute("tabindex", -1);
+
+  //Add ability to swap moves with a click of the v button.
+  moveButton.append(document.createTextNode("v"));
+  moveButton.setAttribute("onclick", "[parentNode.nextSibling.childNodes[1].value, parentNode.nextSibling.childNodes[3].value, parentNode.childNodes[1].value, parentNode.childNodes[3].value] = [parentNode.childNodes[1].value, parentNode.childNodes[3].value, parentNode.nextSibling.childNodes[1].value, parentNode.nextSibling.childNodes[3].value]; checkMoveList();");
+  moveButton.setAttribute("tabindex", -1);
 
   //Limit to numbers in input.
   damageInput.setAttribute("type","text");
@@ -60,6 +65,7 @@ function appendMove(){
   move.append(document.createTextNode("Proration Rate:"));
   move.append(prorationInput);
   move.append(removeButton);
+  move.append(moveButton);
   moveList.appendChild(move);
 }
 
