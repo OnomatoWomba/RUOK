@@ -8,6 +8,10 @@ body{
   background-color:gray;
 }
 
+p{
+  text-align: center;
+}
+
 #center-buttons > button{
   width:40vw;
   margin: 0 auto;

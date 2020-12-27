@@ -33,6 +33,7 @@ function checkMoveList(){
       moveList.childNodes[j-2].style.backgroundColor = "red";
     }
   }
+  document.querySelector("p#move_est").textContent = damagePre;
 }
 
 function appendMove(){
