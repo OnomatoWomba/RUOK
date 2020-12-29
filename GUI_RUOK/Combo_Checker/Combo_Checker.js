@@ -1,5 +1,6 @@
 const addMove = document.querySelector("#add_move");
 const moveList = document.querySelector("#move_holder");
+const roundScaling = document.querySelector("#round");
 
 function checkMoveList(){
   //Given a moveList, check all moves to ensure they are in a good order.
@@ -18,12 +19,24 @@ function checkMoveList(){
     for(j=0;j<=i;j++){
       damagePre += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
       damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
+      if(roundScaling.checked == true){
+        damagePre = Math.floor(damagePre);
+        damageScaling *= 100;
+        damageScaling = Math.floor(damageScaling);
+        damageScaling /= 100;
+      }
     }
     damageScaling = 1.0;
     for(j=0;j<=i;j++){
       if(j!=i-1){
         damagePost += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
         damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
+        if(roundScaling.checked == true){
+          damagePost = Math.floor(damagePost);
+          damageScaling *= 100;
+          damageScaling = Math.floor(damageScaling);
+          damageScaling /= 100;
+        }
       }
     }
     if(damagePre >= damagePost && j-2 >= 1){
@@ -70,9 +83,15 @@ function appendMove(){
   moveList.appendChild(move);
 }
 
+roundScaling.checked = true;
+
 addMove.addEventListener("click",() => {
   appendMove();
-})
+});
+
+roundScaling.addEventListener("click", () => {
+  checkMoveList();
+});
 
 document.querySelector("body").onkeyup = function(){
   checkMoveList();

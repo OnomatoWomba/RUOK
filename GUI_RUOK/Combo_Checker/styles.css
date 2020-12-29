@@ -9,7 +9,13 @@ body{
 }
 
 p{
+  display: block;
   text-align: center;
+}
+
+#round{
+  display: block;
+  margin: 0 auto;
 }
 
 #center-buttons > button{
