@@ -19,11 +19,10 @@ function checkMoveList(){
     for(j=0;j<=i;j++){
       damagePre += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
       damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
+      //Rounds to the nearest hundreth and "floors" damage values to whole numbers.
       if(roundScaling.checked == true){
         damagePre = Math.floor(damagePre);
-        damageScaling *= 100;
-        damageScaling = Math.floor(damageScaling);
-        damageScaling /= 100;
+        damageScaling = Math.floor(damageScaling *= 100)/100;
       }
     }
     damageScaling = 1.0;
@@ -31,11 +30,10 @@ function checkMoveList(){
       if(j!=i-1){
         damagePost += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
         damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
+        //I can't shorten this code because Javascript is actually the devil in disguise as a programming language.
         if(roundScaling.checked == true){
           damagePost = Math.floor(damagePost);
-          damageScaling *= 100;
-          damageScaling = Math.floor(damageScaling);
-          damageScaling /= 100;
+          damageScaling = Math.floor(damageScaling*100)/100;
         }
       }
     }
@@ -93,6 +91,6 @@ roundScaling.addEventListener("click", () => {
   checkMoveList();
 });
 
-document.querySelector("body").onkeyup = function(){
+document.querySelector("body").onkeyup = () => {
   checkMoveList();
 }
