@@ -3,48 +3,44 @@ const moveList = document.querySelector("#move_holder");
 const roundScaling = document.querySelector("#round");
 
 function checkMoveList(){
-  //Given a moveList, check all moves to ensure they are in a good order.
+  var damage = 0;
+  var postMoveDamage = 0;
   var damageScaling = 1.0;
-  var damagePre = 0;
-  var damagePost = 0;
+  var lastProration = 1.0;
+
+  moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
+  moveList.childNodes[0].style.backgroundColor = "green";
 
   for(i=0;i<moveList.children.length;i++){
-    damageScaling = 1.0;
-    damagePre = 0;
-    damagePost = 0;
-
-    moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
-    moveList.childNodes[0].style.backgroundColor = "green";
-
-    for(j=0;j<=i;j++){
-      damagePre += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
-      damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
-      //Rounds to the nearest hundreth and "floors" damage values to whole numbers.
-      if(roundScaling.checked == true){
-        damagePre = Math.floor(damagePre);
-        damageScaling = Math.floor(damageScaling *= 100)/100;
+      //Get the current move without the previous proration.
+      if(i>1){
+        lastProration = damageScaling / Number(moveList.childNodes[i-1].childNodes[3].value);  
       }
-    }
-    damageScaling = 1.0;
-    for(j=0;j<=i;j++){
-      if(j!=i-1){
-        damagePost += Number(moveList.childNodes[j].childNodes[1].value) * damageScaling;
-        damageScaling *= Number(moveList.childNodes[j].childNodes[3].value);
-        //I can't shorten this code because Javascript is actually the devil in disguise as a programming language.
-        if(roundScaling.checked == true){
-          damagePost = Math.floor(damagePost);
-          damageScaling = Math.floor(damageScaling*100)/100;
+      postMoveDamage = Number(moveList.childNodes[i].childNodes[1].value) * lastProration;
+
+      //Get the current damage with all moves.
+      damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
+      if(roundScaling.checked == true){
+        damage = Math.floor(damage);
+      }
+      
+      //Set damage scaling with all moves.
+      damageScaling *= Number(moveList.childNodes[i].childNodes[3].value);
+      if(roundScaling.checked == true){
+        damageScaling = Math.floor(damageScaling*100)/100
+      }
+    
+      //Math it up and find the approximate move damage without the previous move. (Seems to be 99% accurate!)
+      if(i>=2){
+        console.log(damage, damageScaling, Number(moveList.childNodes[i].childNodes[1].value) * (damageScaling / Number(moveList.childNodes[i].childNodes[3].value)));
+        if ((damage - Number(moveList.childNodes[i].childNodes[1].value) * (damageScaling / Number(moveList.childNodes[i].childNodes[3].value)) + postMoveDamage - (Number(moveList.childNodes[i-1].childNodes[1].value) * lastProration) > damage)){
+          moveList.childNodes[i-1].style.backgroundColor = "red";
+        }
+        else{
+          moveList.childNodes[i-1].style.backgroundColor = "green";
         }
       }
-    }
-    if(damagePre >= damagePost && j-2 >= 1){
-      moveList.childNodes[j-2].style.backgroundColor = "green";
-    }
-    else if(j-2 >= 1){
-      moveList.childNodes[j-2].style.backgroundColor = "red";
-    }
   }
-  document.querySelector("p#move_est").textContent = damagePre;
 }
 
 function appendMove(){
