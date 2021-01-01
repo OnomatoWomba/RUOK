@@ -32,7 +32,6 @@ function checkMoveList(){
     
       //Math it up and find the approximate move damage without the previous move. (Seems to be 99% accurate!)
       if(i>=2){
-        console.log(damage, damageScaling, Number(moveList.childNodes[i].childNodes[1].value) * (damageScaling / Number(moveList.childNodes[i].childNodes[3].value)));
         if ((damage - Number(moveList.childNodes[i].childNodes[1].value) * (damageScaling / Number(moveList.childNodes[i].childNodes[3].value)) + postMoveDamage - (Number(moveList.childNodes[i-1].childNodes[1].value) * lastProration) > damage)){
           moveList.childNodes[i-1].style.backgroundColor = "red";
         }
@@ -41,6 +40,7 @@ function checkMoveList(){
         }
       }
   }
+  document.querySelector("p#move_est").textContent = damage;
 }
 
 function appendMove(){
