@@ -27,7 +27,7 @@ function checkMoveList(){
         damageScaling = Math.floor(damageScaling*100)/100
       }
     
-      if(i>=1){if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
+      if(i>=1 && i!=moveList.children.length-1){if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
         moveList.childNodes[i].style.backgroundColor = "green";
       }
       else{
