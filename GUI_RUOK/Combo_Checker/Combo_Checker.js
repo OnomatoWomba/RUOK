@@ -2,21 +2,18 @@ const addMove = document.querySelector("#add_move");
 const moveList = document.querySelector("#move_holder");
 const roundScaling = document.querySelector("#round");
 
+function isOptimal(m1d, m2d, m1p, m2p){
+  return (1/(m1d/m2d)*(m1p-(1-(m1d/m2d)))) < m2p;
+}
+
 function checkMoveList(){
   var damage = 0;
-  var postMoveDamage = 0;
   var damageScaling = 1.0;
-  var lastProration = 1.0;
 
   moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
   moveList.childNodes[0].style.backgroundColor = "green";
 
   for(i=0;i<moveList.children.length;i++){
-      //Get the current move without the previous proration.
-      if(i>1){
-        lastProration = damageScaling / Number(moveList.childNodes[i-1].childNodes[3].value);  
-      }
-      postMoveDamage = Number(moveList.childNodes[i].childNodes[1].value) * lastProration;
 
       //Get the current damage with all moves.
       damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
@@ -30,14 +27,12 @@ function checkMoveList(){
         damageScaling = Math.floor(damageScaling*100)/100
       }
     
-      //Math it up and find the approximate move damage without the previous move. (Seems to be 99% accurate!)
-      if(i>=2){
-        if ((damage - Number(moveList.childNodes[i].childNodes[1].value) * (damageScaling / Number(moveList.childNodes[i].childNodes[3].value)) + postMoveDamage - (Number(moveList.childNodes[i-1].childNodes[1].value) * lastProration) > damage)){
-          moveList.childNodes[i-1].style.backgroundColor = "red";
-        }
-        else{
-          moveList.childNodes[i-1].style.backgroundColor = "green";
-        }
+      if(i>=1){if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
+        moveList.childNodes[i].style.backgroundColor = "green";
+      }
+      else{
+        moveList.childNodes[i].style.backgroundColor = "red";
+      }
       }
   }
   document.querySelector("p#move_est").textContent = damage;
