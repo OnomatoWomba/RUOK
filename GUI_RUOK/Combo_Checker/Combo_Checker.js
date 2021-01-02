@@ -28,22 +28,15 @@ function checkMoveList(){
   }
   damageScaling = 1.0;
   for(i=1;i<damageArray.length;i++){
-    damageScaling *= moveList.childNodes[i-1].childNodes[3].value;
-    nuDamage += moveList.childNodes[i-1].childNodes[1].value;
-    if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
-      moveList.childNodes[i].style.backgroundColor = "green";
+    var accum = 0;
+    for(j=i+1;j<damageArray.length;j++){
+      accum += damageArray[j];
+    }
+    if(damage - nuDamage < (accum / moveList.childNodes[i].childNodes[3].value)){
+      moveList.childNodes[i].style.backgroundColor = "red";
     }
     else{
-      var accum = 0;
-      for(j=i+1;j<damageArray.length;j++){
-        accum += damageArray[j];
-      }
-      if(damage - nuDamage < (accum / moveList.childNodes[i].childNodes[3].value)){
-        moveList.childNodes[i].style.backgroundColor = "red";
-      }
-      else{
-        moveList.childNodes[i].style.backgroundColor = "green";
-      }
+      moveList.childNodes[i].style.backgroundColor = "green";
     }
   }  
     
