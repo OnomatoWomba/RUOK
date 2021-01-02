@@ -19,18 +19,35 @@ function checkMoveList(){
      damageScaling = Math.floor(damageScaling*100)/100;
     }
   }
-  damageScaling = 1.0;
-  for(i=1;i<damageArray.length;i++){
-    var accum = 0;
-    for(j=i;j<damageArray.length;j++){
+  
+  damageScaling = Number(moveList.childNodes[0].childNodes[3].value);
+  nuDamage = Number(moveList.childNodes[0].childNodes[1].value);
+
+  for(i=0;i<damageArray.length;i++){
+    //Accumulator is the sum of all damage after this loop.
+    accum = 0;
+    for(j=i+1;j<damageArray.length;j++){
       accum += damageArray[j];
     }
-    if(damage - nuDamage < (accum / moveList.childNodes[i].childNodes[3].value)){
+
+    // console.log(accum, damageScaling, nuDamage);
+
+    // console.log(((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[3].value)) + (nuDamage - damageArray[i]));
+
+    if(damage < (((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[3].value)) + (nuDamage - damageArray[i]))){
       moveList.childNodes[i].style.backgroundColor = "red";
     }
     else{
-      console.log(damage-nuDamage, (accum / moveList.childNodes[i].childNodes[3].value), moveList.childNodes[i].childNodes[3].value);
       moveList.childNodes[i].style.backgroundColor = "green";
+    }
+
+    //nuDamage is the sum of all of the damage before this loop.
+    nuDamage += damageArray[i+1];
+
+
+    //damageScaling is used to invert the post-damage.
+    if(moveList.childNodes[i+1]){
+      damageScaling *= moveList.childNodes[i+1].childNodes[3].value;
     }
   }
   moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
