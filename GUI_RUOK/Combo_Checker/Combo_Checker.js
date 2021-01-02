@@ -29,8 +29,6 @@ function checkMoveList(){
       moveList.childNodes[i].style.backgroundColor = "green";
     }
     else{
-      console.log("Effective Scaling:",effectiveScaling);
-      console.log("Damage Scaling:",damageScaling);
       if(damage < ((effectiveScaling * (1/damageScaling) / effectiveScaling)*effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
         moveList.childNodes[i].style.backgroundColor = "red";
       }
