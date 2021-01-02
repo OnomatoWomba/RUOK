@@ -22,13 +22,14 @@ function checkMoveList(){
   damageScaling = 1.0;
   for(i=1;i<damageArray.length;i++){
     var accum = 0;
-    for(j=i+1;j<damageArray.length;j++){
+    for(j=i;j<damageArray.length;j++){
       accum += damageArray[j];
     }
     if(damage - nuDamage < (accum / moveList.childNodes[i].childNodes[3].value)){
       moveList.childNodes[i].style.backgroundColor = "red";
     }
     else{
+      console.log(damage-nuDamage, (accum / moveList.childNodes[i].childNodes[3].value), moveList.childNodes[i].childNodes[3].value);
       moveList.childNodes[i].style.backgroundColor = "green";
     }
   }
