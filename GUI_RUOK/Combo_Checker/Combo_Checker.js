@@ -3,7 +3,10 @@ const moveList = document.querySelector("#move_holder");
 const roundScaling = document.querySelector("#round");
 
 function isOptimal(m1d, m2d, m1p, m2p){
-  return (1/(m1d/m2d)*(m1p-(1-(m1d/m2d)))) < m2p;
+  if(m1d == m2d && m1p > m2p){
+    return true;
+  }
+  return (1/(m1d/m2d)*(m1p-(1-(m1d/m2d)))) <= m2p;
 }
 
 function checkMoveList(){
@@ -29,7 +32,7 @@ function checkMoveList(){
       moveList.childNodes[i].style.backgroundColor = "green";
     }
     else{
-      if(damage < ((1/damageScaling) * effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
+      if(damage < ((effectiveScaling * (1/damageScaling) / effectiveScaling) * effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
         moveList.childNodes[i].style.backgroundColor = "red";
       }
       else{
