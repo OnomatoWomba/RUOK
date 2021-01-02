@@ -29,7 +29,7 @@ function checkMoveList(){
       moveList.childNodes[i].style.backgroundColor = "green";
     }
     else{
-      if(damage < ((effectiveScaling * (1/damageScaling) / effectiveScaling)*effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
+      if(damage < ((1/damageScaling) * effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
         moveList.childNodes[i].style.backgroundColor = "red";
       }
       else{
