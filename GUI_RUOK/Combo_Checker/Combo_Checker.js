@@ -22,13 +22,11 @@ function checkMoveList(){
   
   damageScaling = Number(moveList.childNodes[0].childNodes[3].value);
   nuDamage = Number(moveList.childNodes[0].childNodes[1].value);
+  var accum = damage;
 
   for(i=0;i<damageArray.length;i++){
     //Accumulator is the sum of all damage after this loop.
-    accum = 0;
-    for(j=i+1;j<damageArray.length;j++){
-      accum += damageArray[j];
-    }
+    accum -= damageArray[i];
 
     // console.log(accum, damageScaling, nuDamage);
 
