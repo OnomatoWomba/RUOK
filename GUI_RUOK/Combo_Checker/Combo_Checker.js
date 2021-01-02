@@ -8,33 +8,41 @@ function isOptimal(m1d, m2d, m1p, m2p){
 
 function checkMoveList(){
   var damage = 0;
+  var unscaledDamage = 0;
   var damageScaling = 1.0;
+  var effectiveScaling = 0.0;
+
+  for(i=0;i<moveList.children.length;i++){
+    //Get the current damage with all moves.
+    damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
+    unscaledDamage += Number(moveList.childNodes[i].childNodes[1].value);
+    damageScaling *= moveList.childNodes[i].childNodes[3].value;
+    if(roundScaling.checked == true){
+     damage = Math.floor(damage);
+    }
+  }
+  damageScaling = 1.0;
+  effectiveScaling = damage/unscaledDamage;
+  for(i=1;i<moveList.children.length;i++){
+    damageScaling *= moveList.childNodes[i-1].childNodes[3].value;
+    if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
+      moveList.childNodes[i].style.backgroundColor = "green";
+    }
+    else{
+      console.log("Effective Scaling:",effectiveScaling);
+      console.log("Damage Scaling:",damageScaling);
+      if(damage < ((effectiveScaling * (1/damageScaling) / effectiveScaling)*effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
+        moveList.childNodes[i].style.backgroundColor = "red";
+      }
+      else{
+        moveList.childNodes[i].style.backgroundColor = "green";
+      }
+    }
+  }  
+    
 
   moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
   moveList.childNodes[0].style.backgroundColor = "green";
-
-  for(i=0;i<moveList.children.length;i++){
-
-      //Get the current damage with all moves.
-      damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
-      if(roundScaling.checked == true){
-        damage = Math.floor(damage);
-      }
-      
-      //Set damage scaling with all moves.
-      damageScaling *= Number(moveList.childNodes[i].childNodes[3].value);
-      if(roundScaling.checked == true){
-        damageScaling = Math.floor(damageScaling*100)/100
-      }
-    
-      if(i>=1 && i!=moveList.children.length-1){if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
-        moveList.childNodes[i].style.backgroundColor = "green";
-      }
-      else{
-        moveList.childNodes[i].style.backgroundColor = "red";
-      }
-      }
-  }
   document.querySelector("p#move_est").textContent = damage;
 }
 
