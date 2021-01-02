@@ -11,28 +11,34 @@ function isOptimal(m1d, m2d, m1p, m2p){
 
 function checkMoveList(){
   var damage = 0;
-  var unscaledDamage = 0;
+  var damageArray = [];
   var damageScaling = 1.0;
-  var effectiveScaling = 0.0;
+  var nuDamage = 0;
 
   for(i=0;i<moveList.children.length;i++){
     //Get the current damage with all moves.
     damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
-    unscaledDamage += Number(moveList.childNodes[i].childNodes[1].value);
+    damageArray.push(Number(moveList.childNodes[i].childNodes[1].value) * damageScaling);
     damageScaling *= moveList.childNodes[i].childNodes[3].value;
     if(roundScaling.checked == true){
      damage = Math.floor(damage);
+     damageArray[i] = Math.floor(damageArray[i]);
+     damageScaling = Math.floor(damageScaling*100)/100;
     }
   }
   damageScaling = 1.0;
-  effectiveScaling = damage/unscaledDamage;
-  for(i=1;i<moveList.children.length;i++){
+  for(i=1;i<damageArray.length;i++){
     damageScaling *= moveList.childNodes[i-1].childNodes[3].value;
+    nuDamage += moveList.childNodes[i-1].childNodes[1].value;
     if(isOptimal(moveList.childNodes[i-1].childNodes[1].value, moveList.childNodes[i].childNodes[1].value, moveList.childNodes[i-1].childNodes[3].value, moveList.childNodes[i].childNodes[3].value)){
       moveList.childNodes[i].style.backgroundColor = "green";
     }
     else{
-      if(damage < ((effectiveScaling * (1/damageScaling) / effectiveScaling) * effectiveScaling) * (unscaledDamage - Number(moveList.childNodes[i].childNodes[1].value))){
+      var accum = 0;
+      for(j=i+1;j<damageArray.length;j++){
+        accum += damageArray[j];
+      }
+      if(damage - nuDamage < (accum / moveList.childNodes[i].childNodes[3].value)){
         moveList.childNodes[i].style.backgroundColor = "red";
       }
       else{
