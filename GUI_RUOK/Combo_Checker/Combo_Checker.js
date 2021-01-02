@@ -2,13 +2,6 @@ const addMove = document.querySelector("#add_move");
 const moveList = document.querySelector("#move_holder");
 const roundScaling = document.querySelector("#round");
 
-function isOptimal(m1d, m2d, m1p, m2p){
-  if(m1d == m2d && m1p > m2p){
-    return true;
-  }
-  return (1/(m1d/m2d)*(m1p-(1-(m1d/m2d)))) <= m2p;
-}
-
 function checkMoveList(){
   var damage = 0;
   var damageArray = [];
@@ -38,9 +31,7 @@ function checkMoveList(){
     else{
       moveList.childNodes[i].style.backgroundColor = "green";
     }
-  }  
-    
-
+  }
   moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
   moveList.childNodes[0].style.backgroundColor = "green";
   document.querySelector("p#move_est").textContent = damage;
