@@ -69,10 +69,11 @@ function appendMove(){
 
   //Add ability to lock moves from being removed.
   lockButton.setAttribute("type", "checkbox");
+  lockButton.setAttribute("tabindex", -1);
   
   //Add ability to remove with a click of the X button.
   removeButton.append(document.createTextNode("X"));
-  removeButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){parentNode.parentNode.removeChild(parentNode);checkMoveList();}");
+  removeButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){parentNode.parentNode.removeChild(parentNode);checkMoveList();");
   removeButton.setAttribute("tabindex", -1);
 
   //Add ability to swap moves with a click of the v button.
