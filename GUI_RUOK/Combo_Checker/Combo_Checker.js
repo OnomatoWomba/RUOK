@@ -8,6 +8,11 @@ function checkMoveList(){
   var damageScaling = 1.0;
   var nuDamage = 0;
 
+  if(moveList.children.length == 0){
+    document.querySelector("p#move_est").textContent = damage;
+    return;
+  }
+
   for(i=0;i<moveList.children.length;i++){
     //Get the current damage with all moves.
     damage += Number(moveList.childNodes[i].childNodes[3].value) * damageScaling;
