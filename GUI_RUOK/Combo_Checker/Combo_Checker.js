@@ -10,9 +10,9 @@ function checkMoveList(){
 
   for(i=0;i<moveList.children.length;i++){
     //Get the current damage with all moves.
-    damage += Number(moveList.childNodes[i].childNodes[1].value) * damageScaling;
-    damageArray.push(Number(moveList.childNodes[i].childNodes[1].value) * damageScaling);
-    damageScaling *= moveList.childNodes[i].childNodes[3].value;
+    damage += Number(moveList.childNodes[i].childNodes[3].value) * damageScaling;
+    damageArray.push(Number(moveList.childNodes[i].childNodes[3].value) * damageScaling);
+    damageScaling *= moveList.childNodes[i].childNodes[5].value;
     if(roundScaling.checked == true){
      damage = Math.floor(damage);
      damageArray[i] = Math.floor(damageArray[i]);
@@ -20,8 +20,8 @@ function checkMoveList(){
     }
   }
   
-  damageScaling = Number(moveList.childNodes[0].childNodes[3].value);
-  nuDamage = Number(moveList.childNodes[0].childNodes[1].value);
+  damageScaling = Number(moveList.childNodes[0].childNodes[5].value);
+  nuDamage = Number(moveList.childNodes[0].childNodes[3].value);
   var accum = damage;
 
   for(i=0;i<damageArray.length;i++){
@@ -30,9 +30,9 @@ function checkMoveList(){
 
     // console.log(accum, damageScaling, nuDamage);
 
-    // console.log(((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[3].value)) + (nuDamage - damageArray[i]));
+    // console.log(((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[5].value)) + (nuDamage - damageArray[i]));
 
-    if(damage < (((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[3].value)) + (nuDamage - damageArray[i]))){
+    if(damage < (((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[5].value)) + (nuDamage - damageArray[i]))){
       moveList.childNodes[i].style.backgroundColor = "red";
     }
     else{
@@ -45,7 +45,7 @@ function checkMoveList(){
 
     //damageScaling is used to invert the post-damage.
     if(moveList.childNodes[i+1]){
-      damageScaling *= moveList.childNodes[i+1].childNodes[3].value;
+      damageScaling *= moveList.childNodes[i+1].childNodes[5].value;
     }
   }
   moveList.childNodes[moveList.children.length - 1].style.backgroundColor = "green";
@@ -56,19 +56,23 @@ function checkMoveList(){
 function appendMove(){
   //Variable declaration.
   var move = document.createElement("div");
+  var lockButton = document.createElement("input");
   var damageInput = document.createElement("input");
   var prorationInput = document.createElement("input");
   var removeButton = document.createElement("button");
   var moveButton = document.createElement("button");
 
+  //Add ability to lock moves from being removed.
+  lockButton.setAttribute("type", "checkbox");
+  
   //Add ability to remove with a click of the X button.
   removeButton.append(document.createTextNode("X"));
-  removeButton.setAttribute("onclick", "parentNode.parentNode.removeChild(parentNode);checkMoveList();");
+  removeButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){parentNode.parentNode.removeChild(parentNode);checkMoveList();}");
   removeButton.setAttribute("tabindex", -1);
 
   //Add ability to swap moves with a click of the v button.
   moveButton.append(document.createTextNode("v"));
-  moveButton.setAttribute("onclick", "[parentNode.nextSibling.childNodes[1].value, parentNode.nextSibling.childNodes[3].value, parentNode.childNodes[1].value, parentNode.childNodes[3].value] = [parentNode.childNodes[1].value, parentNode.childNodes[3].value, parentNode.nextSibling.childNodes[1].value, parentNode.nextSibling.childNodes[3].value]; checkMoveList();");
+  moveButton.setAttribute("onclick", "[parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value, parentNode.childNodes[3].value, parentNode.childNodes[5].value] = [parentNode.childNodes[3].value, parentNode.childNodes[5].value, parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value]; checkMoveList();");
   moveButton.setAttribute("tabindex", -1);
 
   //Limit to numbers in input.
@@ -78,6 +82,8 @@ function appendMove(){
   prorationInput.setAttribute("pattern","[0-9.]+");
 
   //Formatting the form, starting with Damage.
+  move.append(document.createTextNode("🔒"));
+  move.append(lockButton);
   move.append(document.createTextNode("Move Damage:"));
   move.append(damageInput);
   move.append(document.createTextNode("Proration Rate:"));

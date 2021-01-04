@@ -37,6 +37,10 @@ p{
   color:white;
 }
 
+#move_holder > div > input{
+  width:auto;
+}
+
 #move_holder > div > button{
   text-align:center;
   width:5vw;
