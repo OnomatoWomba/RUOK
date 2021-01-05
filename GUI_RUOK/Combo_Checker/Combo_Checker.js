@@ -33,10 +33,6 @@ function checkMoveList(){
     //Accumulator is the sum of all damage after this loop.
     accum -= damageArray[i];
 
-    // console.log(accum, damageScaling, nuDamage);
-
-    // console.log(((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[5].value)) + (nuDamage - damageArray[i]));
-
     if(damage < (((accum/damageScaling) * (damageScaling / moveList.childNodes[i].childNodes[5].value)) + (nuDamage - damageArray[i]))){
       moveList.childNodes[i].style.backgroundColor = "red";
     }
@@ -88,15 +84,15 @@ function appendMove(){
   prorationInput.setAttribute("pattern","[0-9.]+");
 
   //Formatting the form, starting with Damage.
-  move.append(document.createTextNode("🔒"));
-  move.append(lockButton);
-  move.append(document.createTextNode("Move Damage:"));
-  move.append(damageInput);
-  move.append(document.createTextNode("Proration Rate:"));
-  move.append(prorationInput);
-  move.append(removeButton);
-  move.append(moveButton);
-  moveList.appendChild(move);
+  move.append(document.createTextNode("🔒"));               // 0
+  move.append(lockButton);                                  // 1
+  move.append(document.createTextNode("Move Damage:"));     // 2
+  move.append(damageInput);                                 // 3
+  move.append(document.createTextNode("Proration Rate:"));  // 4
+  move.append(prorationInput);                              // 5
+  move.append(removeButton);                                // 6
+  move.append(moveButton);                                  // 7
+  moveList.appendChild(move);                               // 8
 }
 
 roundScaling.checked = true;
