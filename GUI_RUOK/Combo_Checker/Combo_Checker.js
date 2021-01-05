@@ -74,7 +74,7 @@ function appendMove(){
 
   //Add ability to swap moves with a click of the v button.
   moveButton.append(document.createTextNode("v"));
-  moveButton.setAttribute("onclick", "[parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value, parentNode.childNodes[3].value, parentNode.childNodes[5].value] = [parentNode.childNodes[3].value, parentNode.childNodes[5].value, parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value]; checkMoveList();");
+  moveButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){[parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value, parentNode.childNodes[3].value, parentNode.childNodes[5].value] = [parentNode.childNodes[3].value, parentNode.childNodes[5].value, parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value];} checkMoveList();");
   moveButton.setAttribute("tabindex", -1);
 
   //Limit to numbers in input.
