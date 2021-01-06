@@ -8,7 +8,7 @@ function createWindow () {
   })
 
   win.setMenu(null);
-  win.loadFile('Welcome_Screen/index.html');
+  win.loadFile('Combo_Checker/index.html');
   win.maximize();
 }
 
