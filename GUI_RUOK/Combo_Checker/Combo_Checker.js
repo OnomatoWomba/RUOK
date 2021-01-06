@@ -39,6 +39,11 @@ function checkMoveList(){
     }
     else{
       moveList.childNodes[i].style.backgroundColor = "green";
+      if(moveList.childNodes[i-1]){
+        if(moveList.childNodes[i-1].childNodes[5].value < moveList.childNodes[i].childNodes[5].value){
+          moveList.childNodes[i].style.backgroundColor = "darkgoldenrod";
+        }
+      }
     }
 
     //nuDamage is the sum of all of the damage before this loop.
