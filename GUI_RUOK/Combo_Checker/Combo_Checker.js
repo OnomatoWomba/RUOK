@@ -1,4 +1,5 @@
 const addMove = document.querySelector("#add_move");
+const addMoveStart = document.querySelector("#add_move_start");
 const moveList = document.querySelector("#move_holder");
 const roundScaling = document.querySelector("#round");
 
@@ -54,7 +55,7 @@ function checkMoveList(){
   document.querySelector("p#move_est").textContent = damage;
 }
 
-function appendMove(){
+function appendMove(first = false){
   //Variable declaration.
   var move = document.createElement("div");
   var lockButton = document.createElement("input");
@@ -62,20 +63,26 @@ function appendMove(){
   var prorationInput = document.createElement("input");
   var removeButton = document.createElement("button");
   var moveButton = document.createElement("button");
+  var moveButtonUp = document.createElement("button");
 
   //Add ability to lock moves from being removed.
   lockButton.setAttribute("type", "checkbox");
   lockButton.setAttribute("tabindex", -1);
   
-  //Add ability to remove with a click of the X button.
-  removeButton.append(document.createTextNode("X"));
+  //Add ability to remove with a click of the ❌ button.
+  removeButton.append(document.createTextNode("❌"));
   removeButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){parentNode.parentNode.removeChild(parentNode);}checkMoveList();");
   removeButton.setAttribute("tabindex", -1);
 
-  //Add ability to swap moves with a click of the v button.
-  moveButton.append(document.createTextNode("v"));
+  //Add ability to swap moves with a click of the ⬇️ button.
+  moveButton.append(document.createTextNode("⬇️"));
   moveButton.setAttribute("onclick", "if(!parentNode.childNodes[1].checked){[parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value, parentNode.childNodes[3].value, parentNode.childNodes[5].value] = [parentNode.childNodes[3].value, parentNode.childNodes[5].value, parentNode.nextSibling.childNodes[3].value, parentNode.nextSibling.childNodes[5].value];} checkMoveList();");
   moveButton.setAttribute("tabindex", -1);
+
+  //Add ability to swap moves above the current move with a click of the ⬆️ button.
+  moveButtonUp.append(document.createTextNode("⬆️"));
+  moveButtonUp.setAttribute("onclick","if(!parentNode.childNodes[1].checked){[parentNode.previousSibling.childNodes[3].value, parentNode.previousSibling.childNodes[5].value, parentNode.childNodes[3].value, parentNode.childNodes[5].value] = [parentNode.childNodes[3].value, parentNode.childNodes[5].value, parentNode.previousSibling.childNodes[3].value, parentNode.previousSibling.childNodes[5].value];} checkMoveList();")
+  moveButtonUp.setAttribute("tabindex", -1);
 
   //Limit to numbers in input.
   damageInput.setAttribute("type","text");
@@ -92,7 +99,13 @@ function appendMove(){
   move.append(prorationInput);                              // 5
   move.append(removeButton);                                // 6
   move.append(moveButton);                                  // 7
-  moveList.appendChild(move);                               // 8
+  move.append(moveButtonUp);                                // 8
+  if(first == false){
+    moveList.appendChild(move);
+  }
+  else{
+    moveList.insertBefore(move, moveList.childNodes[0]);
+  }
 }
 
 roundScaling.checked = true;
@@ -100,6 +113,10 @@ roundScaling.checked = true;
 addMove.addEventListener("click",() => {
   appendMove();
 });
+
+addMoveStart.addEventListener("click",() => {
+  appendMove(true);
+})
 
 roundScaling.addEventListener("click", () => {
   checkMoveList();
